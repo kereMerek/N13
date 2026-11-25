@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#091024" />
+  <title>Cumartesi İçin Küçük Bir Şey</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><rect x='2' y='0' width='12' height='16' fill='%2356ccf2'/><rect x='1' y='1' width='14' height='14' fill='%2356ccf2'/><rect x='0' y='2' width='16' height='12' fill='%2356ccf2'/><rect x='2' y='1' width='12' height='14' fill='%23172747'/><rect x='1' y='2' width='14' height='12' fill='%23172747'/><rect x='3' y='2' width='2' height='1' fill='%23091024'/><rect x='11' y='2' width='2' height='1' fill='%23091024'/><rect x='2' y='3' width='4' height='1' fill='%23091024'/><rect x='10' y='3' width='4' height='1' fill='%23091024'/><rect x='2' y='4' width='12' height='6' fill='%23091024'/><rect x='3' y='10' width='10' height='1' fill='%23091024'/><rect x='4' y='11' width='8' height='1' fill='%23091024'/><rect x='3' y='12' width='10' height='1' fill='%23091024'/><rect x='4' y='13' width='8' height='1' fill='%23091024'/><rect x='3' y='3' width='2' height='1' fill='%23eef6ff'/><rect x='11' y='3' width='2' height='1' fill='%23eef6ff'/><rect x='3' y='4' width='3' height='1' fill='%23eef6ff'/><rect x='10' y='4' width='3' height='1' fill='%23eef6ff'/><rect x='3' y='5' width='10' height='5' fill='%23eef6ff'/><rect x='4' y='10' width='8' height='1' fill='%23eef6ff'/><rect x='4' y='12' width='8' height='1' fill='%23eef6ff'/><rect x='4' y='10' width='1' height='1' fill='%23bfd4ee'/><rect x='11' y='10' width='1' height='1' fill='%23bfd4ee'/><rect x='4' y='4' width='1' height='1' fill='%23ff9ebb'/><rect x='11' y='4' width='1' height='1' fill='%23ff9ebb'/><rect x='7' y='9' width='2' height='1' fill='%23ff9ebb'/><rect x='4' y='7' width='2' height='2' fill='%230b132b'/><rect x='10' y='7' width='2' height='2' fill='%230b132b'/><rect x='4' y='7' width='1' height='1' fill='%23ffffff'/><rect x='10' y='7' width='1' height='1' fill='%23ffffff'/><rect x='3' y='9' width='1' height='1' fill='%23ff7aa2'/><rect x='12' y='9' width='1' height='1' fill='%23ff7aa2'/><rect x='5' y='11' width='6' height='1' fill='%2356ccf2'/><rect x='7' y='12' width='2' height='1' fill='%23fde047'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       60-30-10 KOYU MAVİ PİKSEL TEMA
+       %60 Baskın: #091024 / #0e1830 (Gece laciverti zemin)
+       %30 İkincil: #172747 / #243c6b (Paneller, çerçeveler)
+       %10 Vurgu:   #56ccf2 / #9be8ff (Aktif detaylar, yıldızlar)
+       ============================================================ */
+    :root {
+      --bg-60-deep: #091024;
+      --bg-60-mid: #0e1830;
+
+      --panel-30: #172747;
+      --panel-30-light: #243c6b;
+      --panel-30-border: #365999;
+
+      --accent-10: #56ccf2;
+      --accent-10-bright: #9be8ff;
+      --accent-10-dark: #2589b5;
+
+      --text-main: #edf6ff;
+      --text-muted: #8eaad6;
+      --pink-heart: #ff7aa2;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      background-color: var(--bg-60-deep);
+      color: var(--text-main);
+      font-family: "Pixelify Sans", "Courier New", monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Hafif piksel ızgara dokusu (göz yormadan retro derinlik verir) */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(86, 204, 242, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(86, 204, 242, 0.025) 1px, transparent 1px);
+      background-size: 4px 4px;
+      z-index: 0;
+    }
+
+    /* Mobil odaklı ana çerçeve */
+    .app {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      height: 100dvh;
+      max-height: 860px;
+      display: flex;
+      flex-direction: column;
+      padding: 10px 14px 16px;
+      gap: 9px;
+    }
+
+    /* En üst ortadaki geri sayım sayacı */
+    .countdown-wrap {
+      align-self: center;
+      flex-shrink: 0;
+      background: var(--panel-30);
+      border: 2px solid var(--accent-10);
+      box-shadow:
+        inset 0 0 0 2px var(--bg-60-mid),
+        0 4px 0 #040812;
+      padding: 5px 14px;
+      text-align: center;
+    }
+
+    .countdown-label {
+      font-size: 10px;
+      letter-spacing: 0.8px;
+      color: var(--accent-10);
+      line-height: 1.1;
+    }
+
+    .countdown-time {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+      line-height: 1.15;
+    }
+
+    .countdown-time .cd-unit {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 1px;
+    }
+
+    .countdown-time .cd-sep {
+      color: var(--accent-10);
+      margin: 0 3px;
+    }
+
+    .countdown-time.done {
+      color: var(--pink-heart);
+    }
+
+    /* Üst bar: ilerleme çubuğu + ses kontrolü */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .progress-pips {
+      display: flex;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .pip {
+      height: 6px;
+      flex: 1;
+      background: var(--panel-30);
+      border: 2px solid var(--panel-30-border);
+      transition: background 0.15s steps(2), border-color 0.15s steps(2);
+    }
+
+    .pip.done {
+      background: var(--accent-10-dark);
+      border-color: var(--accent-10);
+    }
+
+    .pip.active {
+      background: var(--accent-10);
+      border-color: var(--accent-10-bright);
+    }
+
+    .pixel-btn-sm {
+      background: var(--panel-30);
+      color: var(--text-main);
+      border: 2px solid var(--panel-30-border);
+      box-shadow: 0 3px 0 #050914;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 9px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      line-height: 1;
+    }
+
+    .pixel-btn-sm:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #050914;
+    }
+
+    .pixel-btn-sm.muted {
+      color: var(--text-muted);
+      border-color: #263c66;
+    }
+
+    /* ============================================================
+       SAHNE ALANI (CANVAS + YUKARIDA AÇILAN PİKSEL TABELA)
+       ============================================================ */
+    .stage-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      flex-shrink: 0;
+      background: var(--bg-60-mid);
+      border: 3px solid var(--panel-30-border);
+      box-shadow:
+        inset 0 0 0 3px var(--bg-60-deep),
+        0 6px 0 #040812;
+      overflow: hidden;
+    }
+
+    canvas#scene {
+      width: 100%;
+      height: 100%;
+      display: block;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      cursor: pointer;
+    }
+
+    /* Kedi yukarıyı gösterdiğinde beliren piksel tabela */
+    .sky-sign {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-16px) scale(0.92);
+      opacity: 0;
+      pointer-events: none;
+      background: var(--panel-30);
+      border: 2px solid var(--accent-10);
+      box-shadow:
+        0 0 0 2px var(--bg-60-deep),
+        0 4px 0 #050914;
+      padding: 6px 12px;
+      text-align: center;
+      white-space: nowrap;
+      transition: transform 0.25s steps(4), opacity 0.2s steps(3);
+    }
+
+    .sky-sign.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    .sky-sign-top {
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--accent-10-bright);
+      text-transform: uppercase;
+    }
+
+    .sky-sign-bottom {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 2px;
+    }
+
+    /* Kediye dokunma ipucu */
+    .pet-hint {
+      position: absolute;
+      bottom: 6px;
+      right: 8px;
+      font-size: 11px;
+      color: rgba(155, 232, 255, 0.72);
+      background: rgba(9, 16, 36, 0.65);
+      padding: 2px 6px;
+      border: 1px solid rgba(86, 204, 242, 0.3);
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .pet-hint.hidden {
+      opacity: 0;
+    }
+
+    /* ============================================================
+       RPG DİYALOG KUTUSU
+       ============================================================ */
+    .dialogue-area {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dialogue-box {
+      position: relative;
+      background: var(--panel-30);
+      border: 3px solid var(--panel-30-border);
+      box-shadow:
+        inset 0 0 0 3px var(--bg-60-mid),
+        0 5px 0 #040812;
+      padding: 18px 16px 14px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 118px;
+    }
+
+    /* Köşe piksel detayları */
+    .dialogue-box::before,
+    .dialogue-box::after {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--accent-10);
+    }
+    .dialogue-box::before { top: 4px; right: 4px; }
+    .dialogue-box::after { bottom: 4px; left: 4px; }
+
+    .speaker-tag {
+      position: absolute;
+      top: -13px;
+      left: 12px;
+      background: var(--accent-10);
+      color: var(--bg-60-deep);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border: 2px solid var(--bg-60-deep);
+      box-shadow: 0 2px 0 var(--panel-30-border);
+      letter-spacing: 0.5px;
+    }
+
+    .dialogue-text {
+      font-size: 18px;
+      line-height: 1.45;
+      color: var(--text-main);
+      margin: 0;
+      word-break: break-word;
+    }
+
+    .typing-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: var(--accent-10);
+      margin-left: 3px;
+      vertical-align: -2px;
+      animation: blinkStep 0.7s steps(2) infinite;
+    }
+
+    .tap-prompt {
+      align-self: flex-end;
+      font-size: 12px;
+      color: var(--accent-10);
+      margin-top: 8px;
+      opacity: 0;
+      animation: bobStep 0.8s steps(2) infinite;
+    }
+
+    .tap-prompt.ready {
+      opacity: 1;
+    }
+
+    /* ============================================================
+       ETKİLEŞİMLİ PLAN SEÇİCİ & ÖZET ALANI
+       ============================================================ */
+    .extra-panel {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+      padding: 2px 0 4px;
+    }
+
+    .extra-panel.visible {
+      display: flex;
+    }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .plan-chip {
+      background: var(--bg-60-mid);
+      color: var(--text-main);
+      border: 2px solid var(--panel-30-border);
+      box-shadow: 0 3px 0 #040812;
+      padding: 9px 10px;
+      font-family: inherit;
+      font-size: 14px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: background 0.1s steps(2), border-color 0.1s steps(2);
+    }
+
+    .plan-chip:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #040812;
+    }
+
+    .plan-chip .box-mark {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      border: 2px solid var(--panel-30-border);
+      background: var(--bg-60-deep);
+      display: inline-block;
+    }
+
+    .plan-chip.selected {
+      background: var(--panel-30-light);
+      border-color: var(--accent-10);
+      color: var(--accent-10-bright);
+    }
+
+    .plan-chip.selected .box-mark {
+      background: var(--accent-10);
+      border-color: var(--accent-10-bright);
+    }
+
+    .summary-card {
+      background: var(--bg-60-mid);
+      border: 2px solid var(--accent-10);
+      padding: 10px 12px;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text-main);
+    }
+
+    .summary-title {
+      font-size: 12px;
+      color: var(--accent-10);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .copy-btn {
+      width: 100%;
+      background: var(--accent-10);
+      color: var(--bg-60-deep);
+      border: 2px solid var(--accent-10-bright);
+      box-shadow: 0 4px 0 var(--accent-10-dark);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .copy-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 var(--accent-10-dark);
+    }
+
+    /* ============================================================
+       ALT NAVİGASYON
+       ============================================================ */
+    .nav-bar {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+      flex-shrink: 0;
+    }
+
+    .nav-btn {
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 11px 16px;
+      cursor: pointer;
+      border: 2px solid var(--panel-30-border);
+      background: var(--panel-30);
+      color: var(--text-main);
+      box-shadow: 0 4px 0 #040812;
+    }
+
+    .nav-btn:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #040812;
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    .nav-btn.primary {
+      flex: 1;
+      background: var(--panel-30-light);
+      border-color: var(--accent-10);
+      color: var(--accent-10-bright);
+    }
+
+    @keyframes blinkStep {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @keyframes bobStep {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(2px); }
+    }
+
+    /* Çok küçük ekranlar için ince ayar */
+    @media (max-height: 640px) {
+      .app { padding: 7px 10px 10px; gap: 6px; }
+      .countdown-wrap { padding: 4px 10px; }
+      .countdown-time { font-size: 13px; }
+      .dialogue-box { min-height: 94px; padding: 14px 12px 10px; }
+      .dialogue-text { font-size: 16px; }
+      .nav-btn { padding: 9px 12px; font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <!-- En Üst Orta Geri Sayım Sayacı -->
+    <div class="countdown-wrap" aria-live="polite">
+      <div class="countdown-label" id="countdownLabel"></div>
+      <div class="countdown-time" id="countdownTime">--</div>
+    </div>
+
+    <!-- Üst İlerleme Çubuğu ve Ses -->
+    <header class="top-bar">
+      <div class="progress-pips" id="progressPips"></div>
+      <button class="pixel-btn-sm" id="soundBtn" type="button" aria-label="Sesi aç veya kapat">
+        SES: AÇIK
+      </button>
+    </header>
+
+    <!-- Pixel Art Sahne -->
+    <section class="stage-wrap">
+      <canvas id="scene" width="160" height="120"></canvas>
+      <div class="sky-sign" id="skySign">
+        <div class="sky-sign-top" id="signTop"></div>
+        <div class="sky-sign-bottom" id="signBottom"></div>
+      </div>
+      <div class="pet-hint" id="petHint">kediye dokunabiliysinnnnn :)</div>
+    </section>
+
+    <!-- Diyalog + Etkileşimli Alan -->
+    <section class="dialogue-area">
+      <div class="dialogue-box" id="dialogueBox" role="button" tabindex="0">
+        <div class="speaker-tag" id="speakerTag">MİNNOŞ</div>
+        <p class="dialogue-text" id="dialogueText"></p>
+        <div class="tap-prompt" id="tapPrompt">devam etmek için dokunnnnnn ▾</div>
+      </div>
+
+      <div class="extra-panel" id="extraPanel"></div>
+    </section>
+
+    <!-- Geri / İleri Butonları -->
+    <footer class="nav-bar">
+      <button class="nav-btn" id="prevBtn" type="button">◂ Geri</button>
+      <button class="nav-btn primary" id="nextBtn" type="button">Devam ▸</button>
+    </footer>
+  </main>
+
+  <script>
+    /* ============================================================
+       BURADAN TÜM METİNLERİ VE SAHNELERİ KOLAYCA DEĞİŞTİREBİLİRSİN
+       ============================================================
+       Kullanılabilir kedi pozları (pose):
+         "wave"    -> El sallar
+         "pointUp" -> Eliyle yukarıyı (tabelayı) gösterir
+         "travel"  -> Arka planda Karabük -> Denizli otobüs animasyonu
+         "happy"   -> İki patisi havada neşeli zıplar
+         "love"    -> Kayan yıldızlar ve bol piksel kalp eşliğinde final
+       ============================================================ */
+    const SITE_CONFIG = {
+      pageTitle: "Cumartesi İçin Küçük Bir Şey",
+      defaultSpeaker: "MİNNOŞ", // Kendi ismini veya kedinin ismini yazabilirsin
+
+      // En üst ortadaki geri sayım sayacı (27 Kasım 07.35)
+      countdown: {
+        month: 11,
+        day: 27,
+        hour: 7,
+        minute: 35,
+        label: "27 KASIM 07.35 • KAVUŞMAMISAAA SUNNN",
+        doneText: "GELDİMMM SEVGİLİMMM <3"
+      },
+
+      // Kedi yukarıyı gösterdiğinde gökyüzünde çıkan tabela
+      skySign: {
+        top: "BU CUMARTESİ",
+        bottom: "KARABÜK → DENİZLİ"
+      },
+
+      // Yolculuk sahnesindeki şehir kısaltmaları
+      route: {
+        from: "KRB",
+        to: "DNZ"
+      },
+
+      // Plan seçme ekranındaki seçenekler (istediğin gibi ekle/çıkar)
+      dateOptions: [
+        "Abuyy cubuyy alıp banktaa utuymaakk",
+        "Poppeyess daa yemekk yimeeekkk",
+        "Biylikteee üleceee sağa solaa yüyümeekk",
+        "Paymakk islii anahtaylıkk yapmaakk",
+        "Tatlı krizii geçiyipp biybiyimisiii yemeekk",
+        "Akşamaa kadayy banktaa utuyuppp öslemm gideymeeekkkk",
+        "AVM ye gidipppp üleceeee dolanmakkkkk",
+        "Biylikteee kıyafettt bakmayaa gitmeekkk",
+        "Legoo gibi küçükkk şeyleyyy ayıpp biylikte yapmaakkkk",
+        "Stickerrr ayıpp biybiyimisinn yüsünee yapıştıymakk sunyaaa daa fotoğraf çekiymekkk ehehehheh",
+        "İnteynetteee göydüğümüzzz vidyolayııı yapmaaakkkk",
+        "Gratiseee gidippp fayklııı tatlııı şileyyy aymakkk sunyaaa daa tadınaa bakmakkk eheheheh",
+        "Üstümeee yatıpppp benn saçınlaaa uynaykennn reels islemeekkkk",
+        "Tussluuuu bi şekeeyyyy yimeekkkk eheheheh",
+        "Nefessizzz kayanaaaa kadayyy üpüşmeekkkk"
+      ],
+
+      // Sunum slaytları (sırasıyla oynar)
+      slides: [
+        {
+          pose: "wave",
+          text: "Miyabaaaaa sevgilimmmm canımmm sıkıldıııı bendeee çanaa büleee bi süpyizzz hasıylamakk istedimmmmm"
+        },
+        {
+          pose: "pointUp",
+          showSign: true,
+          text: "Biliyosunnn bu cumartesiii yanınaaa geycemmmm ve çok fazla bi plan yapmadık bendee aklımaa gelenn bi kaç şeyy eklediimmm yapcağımızz şeyleyinnn yanınaa bunlayıı da ekleyimm didimmmm"
+        },
+        {
+          pose: "travel",
+          text: "Otobüs yoldaaa gidyoyyy amaaa benim kaybiimmmm çuktannn senin yanındaaa sevgilimmm"
+        },
+        {
+          pose: "happy",
+          showPlanner: true,
+          text: "Cumartesiii için birkaççç şeyyy koydummm, hangileyiniii istersennn işayetleee bakalummm"
+        },
+        {
+          pose: "love",
+          showSummary: true,
+          text: "Şimdiden çok heyecanlıyımmm cumartesiii yanınaaaa geyinceeee kocaman sayılcammm çanaaaaa yavruuummmmm <3"
+        }
+      ]
+    };
+
+    /* ============================================================
+       GERİ SAYIM SAYACI
+       ============================================================ */
+    const countdownLabelEl = document.getElementById("countdownLabel");
+    const countdownTimeEl = document.getElementById("countdownTime");
+    countdownLabelEl.textContent = SITE_CONFIG.countdown.label;
+
+    function updateCountdown() {
+      const c = SITE_CONFIG.countdown;
+      const now = new Date();
+      const target = new Date(now.getFullYear(), c.month - 1, c.day, c.hour, c.minute, 0);
+      const diff = target - now;
+
+      if (diff <= 0) {
+        countdownTimeEl.classList.add("done");
+        countdownTimeEl.textContent = c.doneText;
+        return;
+      }
+
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      const secs = Math.floor((diff % 60000) / 1000);
+
+      const pad = (n) => String(n).padStart(2, "0");
+
+      countdownTimeEl.classList.remove("done");
+      countdownTimeEl.innerHTML =
+        `${pad(days)}<span class="cd-unit">g</span>` +
+        `<span class="cd-sep">:</span>` +
+        `${pad(hours)}<span class="cd-unit">s</span>` +
+        `<span class="cd-sep">:</span>` +
+        `${pad(mins)}<span class="cd-unit">d</span>` +
+        `<span class="cd-sep">:</span>` +
+        `${pad(secs)}<span class="cd-unit">sn</span>`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    /* ============================================================
+       8-BIT SES MOTORU (Harici ses dosyası gerekmez - Web Audio)
+       ============================================================ */
+    const Sound = (() => {
+      let ctx = null;
+      let enabled = true;
+
+      function ensureCtx() {
+        if (!ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) ctx = new AudioCtx();
+        }
+        if (ctx && ctx.state === "suspended") {
+          ctx.resume();
+        }
+      }
+
+      function tone(freq, duration, type = "triangle", volume = 0.035, slideTo = null) {
+        if (!enabled) return;
+        ensureCtx();
+        if (!ctx) return;
+
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        if (slideTo) {
+          osc.frequency.exponentialRampToValueAtTime(slideTo, now + duration);
+        }
+
+        gain.gain.setValueAtTime(volume, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + duration);
+      }
+
+      return {
+        toggle() {
+          enabled = !enabled;
+          if (enabled) this.click();
+          return enabled;
+        },
+        isEnabled: () => enabled,
+        blip() {
+          const pitch = 440 + Math.random() * 90;
+          tone(pitch, 0.035, "triangle", 0.022);
+        },
+        click() {
+          tone(520, 0.055, "square", 0.022, 740);
+        },
+        next() {
+          tone(440, 0.06, "triangle", 0.035, 660);
+        },
+        purr() {
+          tone(560, 0.08, "sine", 0.04, 880);
+          setTimeout(() => tone(740, 0.11, "sine", 0.035, 980), 65);
+        }
+      };
+    })();
+
+    /* ============================================================
+       PİKSEL ART SPRİTE MATRİSLERİ (24x20 KEDİ + ANİMASYON PARÇALARI)
+       ============================================================ */
+    const PALETTE = {
+      O: "#091024", // Koyu lacivert kontur
+      W: "#eef6ff", // Ana kürk
+      S: "#bfd4ee", // Kürk gölgesi
+      E: "#0b132b", // Göz bebeği
+      H: "#ffffff", // Göz parıltısı
+      P: "#ff9ebb", // Kulak içi / burun / pati yastığı
+      B: "#ff7aa2", // Yanak allığı
+      C: "#56ccf2", // Mavi tasma
+      D: "#2589b5", // Tasma gölgesi
+      G: "#fde047", // Mini zil
+      A: "#9be8ff"  // Hareket efekti
+    };
+
+    // 24x20 oturan kedi ana gövdesi
+    const CAT_BASE = [
+      "........................",
+      "........................",
+      "......OO........OO......",
+      ".....OWWO......OWWO.....",
+      ".....OWPWO....OWPWO.....",
+      ".....OWPWOOOOOOWPWO.....",
+      ".....OWWWWWWWWWWWWO.....",
+      "....OWWWWWWWWWWWWWWO....",
+      "....OWWWHEWWWWHEWWWO....",
+      "....OWWWEEWWWWEEWWWO....",
+      "....OWBWWWWPPWWWWBWO....",
+      ".....OWSWWWWWWWWSWO.....",
+      "......ODCCCCCCCCDO......",
+      ".....OWWWWWGGWWWWWO.....",
+      ".....OWSWWWWWWWWSWO.....",
+      "....OWSSWWWWWWWWSSWO....",
+      "....OWSSWWWWWWWWSSWO....",
+      "....OWSWWWO..OWWWSWO....",
+      ".....OOWWWO..OWWWOO.....",
+      ".......OOO....OOO......."
+    ];
+
+    // Kuyruk kareleri (sağ tarafta sallanır)
+    const TAIL_FRAMES = [
+      [
+        { x: 21, y: 11, c: "O" }, { x: 22, y: 11, c: "O" },
+        { x: 20, y: 12, c: "O" }, { x: 21, y: 12, c: "W" }, { x: 22, y: 12, c: "W" }, { x: 23, y: 12, c: "O" },
+        { x: 20, y: 13, c: "O" }, { x: 21, y: 13, c: "W" }, { x: 22, y: 13, c: "S" }, { x: 23, y: 13, c: "O" },
+        { x: 20, y: 14, c: "O" }, { x: 21, y: 14, c: "W" }, { x: 22, y: 14, c: "O" },
+        { x: 19, y: 15, c: "O" }, { x: 20, y: 15, c: "W" }, { x: 21, y: 15, c: "O" },
+        { x: 19, y: 16, c: "S" }, { x: 20, y: 16, c: "O" }
+      ],
+      [
+        { x: 21, y: 12, c: "O" }, { x: 22, y: 12, c: "O" },
+        { x: 20, y: 13, c: "O" }, { x: 21, y: 13, c: "W" }, { x: 22, y: 13, c: "W" }, { x: 23, y: 13, c: "O" },
+        { x: 20, y: 14, c: "O" }, { x: 21, y: 14, c: "W" }, { x: 22, y: 14, c: "S" }, { x: 23, y: 14, c: "O" },
+        { x: 19, y: 15, c: "O" }, { x: 20, y: 15, c: "W" }, { x: 21, y: 15, c: "S" }, { x: 22, y: 15, c: "O" },
+        { x: 19, y: 16, c: "S" }, { x: 20, y: 16, c: "O" }
+      ]
+    ];
+
+    // El sallama patisi (2 kare)
+    const WAVE_PAW = [
+      [
+        { x: 1, y: 6, c: "A" }, { x: 0, y: 7, c: "A" },
+        { x: 1, y: 8, c: "O" }, { x: 2, y: 8, c: "O" },
+        { x: 0, y: 9, c: "O" }, { x: 1, y: 9, c: "W" }, { x: 2, y: 9, c: "W" }, { x: 3, y: 9, c: "O" },
+        { x: 0, y: 10, c: "O" }, { x: 1, y: 10, c: "W" }, { x: 2, y: 10, c: "P" }, { x: 3, y: 10, c: "O" },
+        { x: 1, y: 11, c: "O" }, { x: 2, y: 11, c: "W" }, { x: 3, y: 11, c: "W" }, { x: 4, y: 11, c: "O" },
+        { x: 2, y: 12, c: "O" }, { x: 3, y: 12, c: "W" }, { x: 4, y: 12, c: "W" },
+        { x: 3, y: 13, c: "O" }, { x: 4, y: 13, c: "W" }, { x: 5, y: 13, c: "W" }
+      ],
+      [
+        { x: 3, y: 6, c: "A" },
+        { x: 2, y: 8, c: "O" }, { x: 3, y: 8, c: "O" },
+        { x: 1, y: 9, c: "O" }, { x: 2, y: 9, c: "W" }, { x: 3, y: 9, c: "W" }, { x: 4, y: 9, c: "O" },
+        { x: 1, y: 10, c: "O" }, { x: 2, y: 10, c: "P" }, { x: 3, y: 10, c: "W" }, { x: 4, y: 10, c: "O" },
+        { x: 2, y: 11, c: "O" }, { x: 3, y: 11, c: "W" }, { x: 4, y: 11, c: "W" },
+        { x: 2, y: 12, c: "O" }, { x: 3, y: 12, c: "W" }, { x: 4, y: 12, c: "W" },
+        { x: 3, y: 13, c: "O" }, { x: 4, y: 13, c: "W" }, { x: 5, y: 13, c: "W" }
+      ]
+    ];
+
+    // Yukarı gösteren pati
+    const POINT_UP_PAW = [
+      { x: 2, y: 0, c: "O" },
+      { x: 1, y: 1, c: "O" }, { x: 2, y: 1, c: "W" }, { x: 3, y: 1, c: "O" },
+      { x: 0, y: 2, c: "O" }, { x: 1, y: 2, c: "W" }, { x: 2, y: 2, c: "P" }, { x: 3, y: 2, c: "O" },
+      { x: 0, y: 3, c: "O" }, { x: 1, y: 3, c: "W" }, { x: 2, y: 3, c: "W" }, { x: 3, y: 3, c: "O" },
+      { x: 1, y: 4, c: "O" }, { x: 2, y: 4, c: "W" }, { x: 3, y: 4, c: "O" },
+      { x: 1, y: 5, c: "O" }, { x: 2, y: 5, c: "W" }, { x: 3, y: 5, c: "O" },
+      { x: 1, y: 6, c: "O" }, { x: 2, y: 6, c: "W" }, { x: 3, y: 6, c: "O" },
+      { x: 1, y: 7, c: "O" }, { x: 2, y: 7, c: "W" }, { x: 3, y: 7, c: "O" },
+      { x: 1, y: 8, c: "O" }, { x: 2, y: 8, c: "W" }, { x: 3, y: 8, c: "O" },
+      { x: 1, y: 9, c: "O" }, { x: 2, y: 9, c: "W" }, { x: 3, y: 9, c: "O" },
+      { x: 1, y: 10, c: "O" }, { x: 2, y: 10, c: "W" }, { x: 3, y: 10, c: "O" },
+      { x: 1, y: 11, c: "O" }, { x: 2, y: 11, c: "W" }, { x: 3, y: 11, c: "O" },
+      { x: 2, y: 12, c: "O" }, { x: 3, y: 12, c: "W" }, { x: 4, y: 12, c: "W" },
+      { x: 3, y: 13, c: "O" }, { x: 4, y: 13, c: "W" }, { x: 5, y: 13, c: "W" }
+    ];
+
+    // İki pati havada mutlu poz
+    const HAPPY_PAWS = [
+      { x: 2, y: 11, c: "O" }, { x: 3, y: 11, c: "O" },
+      { x: 1, y: 12, c: "O" }, { x: 2, y: 12, c: "P" }, { x: 3, y: 12, c: "W" }, { x: 4, y: 12, c: "O" },
+      { x: 2, y: 13, c: "O" }, { x: 3, y: 13, c: "W" }, { x: 4, y: 13, c: "W" },
+
+      { x: 20, y: 11, c: "O" }, { x: 21, y: 11, c: "O" },
+      { x: 19, y: 12, c: "O" }, { x: 20, y: 12, c: "W" }, { x: 21, y: 12, c: "P" }, { x: 22, y: 12, c: "O" },
+      { x: 19, y: 13, c: "W" }, { x: 20, y: 13, c: "W" }, { x: 21, y: 13, c: "O" }
+    ];
+
+    // 7x6 piksel kalp
+    const HEART_SPRITE = [
+      ".XX.XX.",
+      "XXXXXXX",
+      "XXXXXXX",
+      ".XXXXX.",
+      "..XXX..",
+      "...X..."
+    ];
+
+    // 14x8 mini piksel otobüs (Karabük -> Denizli sahnesi)
+    const BUS_SPRITE = [
+      ".OOOOOOOOOOOO.",
+      "OCCCCCCCCCCCCO",
+      "OCAAOCAAOCAAOO",
+      "OCCCCCCCCCCCGY",
+      "ODDDDDDDDDDDDO",
+      "OODDOOOOOODDOO",
+      "..OO......OO.."
+    ];
+
+    /* ============================================================
+       CANVAS SAHNE RENDER MOTORU (160x120)
+       ============================================================ */
+    const canvas = document.getElementById("scene");
+    const ctx = canvas.getContext("2d");
+    const W = 160;
+    const H = 120;
+
+    // Yıldızlar, bulutlar, partiküller
+    const stars = Array.from({ length: 34 }, (_, i) => ({
+      x: (i * 29 + 11) % 156 + 2,
+      y: (i * 17 + 7) % 66 + 4,
+      phase: i * 0.7,
+      big: i % 5 === 0
+    }));
+
+    const clouds = [
+      { x: 14, y: 30, w: 26, speed: 0.04 },
+      { x: 96, y: 22, w: 32, speed: 0.03 },
+      { x: 132, y: 46, w: 22, speed: 0.05 }
+    ];
+
+    let hearts = [];
+    let shootingStars = [];
+    let busX = 24;
+
+    // Durum değişkenleri
+    let currentSlide = 0;
+    let selectedPlans = new Set();
+    let petHappyUntil = 0;
+    let hasPettedOnce = false;
+
+    function spawnHeart(x, y, count = 1) {
+      for (let i = 0; i < count; i++) {
+        hearts.push({
+          x: x + (Math.random() - 0.5) * 26,
+          y: y + (Math.random() - 0.5) * 10,
+          vy: 0.16 + Math.random() * 0.14,
+          vx: (Math.random() - 0.5) * 0.12,
+          life: 1,
+          color: Math.random() > 0.35 ? "#ff7aa2" : "#9be8ff"
+        });
+      }
+    }
+
+    function spawnShootingStar() {
+      shootingStars.push({
+        x: 20 + Math.random() * 90,
+        y: 6 + Math.random() * 24,
+        vx: 1.5,
+        vy: 0.65,
+        life: 1
+      });
+    }
+
+    function drawPixel(x, y, color, size = 1) {
+      ctx.fillStyle = color;
+      ctx.fillRect(Math.floor(x), Math.floor(y), size, size);
+    }
+
+    function drawSky(t) {
+      // 4 kademeli gece mavisi gökyüzü + piksel dithering çizgileri
+      const bands = [
+        { y: 0, h: 30, c: "#091024", next: "#0e1936" },
+        { y: 30, h: 24, c: "#0e1936", next: "#14244a" },
+        { y: 54, h: 22, c: "#14244a", next: "#1b315e" },
+        { y: 76, h: 24, c: "#1b315e", next: null }
+      ];
+
+      for (const b of bands) {
+        ctx.fillStyle = b.c;
+        ctx.fillRect(0, b.y, W, b.h);
+        if (b.next) {
+          ctx.fillStyle = b.next;
+          for (let x = 0; x < W; x += 2) {
+            ctx.fillRect(x, b.y + b.h - 1, 1, 1);
+            ctx.fillRect(x + 1, b.y + b.h - 2, 1, 1);
+          }
+        }
+      }
+
+      // Piksel hilal ay (sol üst)
+      const mx = 18, my = 14;
+      const moonMask = [
+        "..XXX..",
+        ".XXXX..",
+        "XXXX...",
+        "XXXX...",
+        "XXXX...",
+        ".XXXX..",
+        "..XXX.."
+      ];
+      moonMask.forEach((row, ry) => {
+        for (let rx = 0; rx < row.length; rx++) {
+          if (row[rx] === "X") {
+            drawPixel(mx + rx, my + ry, "#dff4ff");
+          }
+        }
+      });
+
+      // Parıldayan yıldızlar
+      for (const s of stars) {
+        const pulse = Math.sin(t * 0.003 + s.phase);
+        if (s.big && pulse > 0.25) {
+          drawPixel(s.x, s.y, "#9be8ff");
+          drawPixel(s.x - 1, s.y, "#56ccf2");
+          drawPixel(s.x + 1, s.y, "#56ccf2");
+          drawPixel(s.x, s.y - 1, "#56ccf2");
+          drawPixel(s.x, s.y + 1, "#56ccf2");
+        } else {
+          drawPixel(s.x, s.y, pulse > 0 ? "#9be8ff" : "#385b96");
+        }
+      }
+
+      // Kayan yıldızlar
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
+        const st = shootingStars[i];
+        drawPixel(st.x, st.y, "#ffffff");
+        drawPixel(st.x - 2, st.y - 1, "#9be8ff");
+        drawPixel(st.x - 4, st.y - 2, "#56ccf2");
+        st.x += st.vx;
+        st.y += st.vy;
+        st.life -= 0.03;
+        if (st.life <= 0) shootingStars.splice(i, 1);
+      }
+
+      // Yavaş süzülen piksel bulutlar
+      for (const cl of clouds) {
+        cl.x += cl.speed;
+        if (cl.x > W + 10) cl.x = -cl.w - 6;
+        const cx = Math.floor(cl.x);
+        ctx.fillStyle = "#192d57";
+        ctx.fillRect(cx + 3, cl.y, cl.w - 6, 4);
+        ctx.fillRect(cx, cl.y + 2, cl.w, 4);
+        ctx.fillStyle = "#223b6e";
+        ctx.fillRect(cx + 4, cl.y + 1, cl.w - 10, 2);
+      }
+    }
+
+    function drawGround() {
+      // Uzak tepeler
+      ctx.fillStyle = "#111f3f";
+      for (let x = 0; x < W; x += 2) {
+        const h = Math.floor(Math.sin(x * 0.05) * 4 + Math.cos(x * 0.09) * 3);
+        ctx.fillRect(x, 88 + h, 2, 20);
+      }
+
+      // Ön zemin / balkon platformu
+      ctx.fillStyle = "#0b142b";
+      ctx.fillRect(0, 98, W, 22);
+      ctx.fillStyle = "#1c325e";
+      ctx.fillRect(0, 98, W, 4);
+      ctx.fillStyle = "#2d4e8a";
+      for (let x = 0; x < W; x += 4) {
+        ctx.fillRect(x, 98, 2, 1);
+      }
+
+      // Kedinin altındaki küçük yumuşak piksel gölge
+      ctx.fillStyle = "#070d1c";
+      ctx.fillRect(62, 102, 36, 3);
+      ctx.fillRect(65, 101, 30, 5);
+    }
+
+    function drawTravelOverlay(t) {
+      // Gökyüzünde mini rota çubuğu ve hareketli piksel otobüs
+      const barY = 34;
+      ctx.fillStyle = "#172747";
+      ctx.fillRect(18, barY - 12, 124, 24);
+      ctx.strokeStyle = "#56ccf2";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(18.5, barY - 11.5, 123, 23);
+
+      // Kesikli piksel yol
+      ctx.fillStyle = "#365999";
+      for (let x = 32; x < 126; x += 4) {
+        ctx.fillRect(x, barY + 6, 2, 1);
+      }
+
+      // Başlangıç ve bitiş noktaları
+      drawPixel(26, barY + 5, "#56ccf2", 3);
+      drawPixel(131, barY + 5, "#ff7aa2", 3);
+
+      // Otobüs hareketi
+      busX += 0.28;
+      if (busX > 118) busX = 28;
+      const by = barY - 2 + (Math.floor(t / 140) % 2);
+
+      // Otobüs sprite çizimi
+      const busColors = {
+        O: "#091024",
+        C: "#56ccf2",
+        D: "#2589b5",
+        A: "#dff6ff",
+        G: "#9be8ff",
+        Y: "#fde047"
+      };
+      BUS_SPRITE.forEach((row, ry) => {
+        for (let rx = 0; rx < row.length; rx++) {
+          const ch = row[rx];
+          if (busColors[ch]) {
+            drawPixel(busX + rx, by + ry, busColors[ch]);
+          }
+        }
+      });
+
+      // Far ışığı
+      ctx.fillStyle = "rgba(253, 224, 71, 0.25)";
+      ctx.fillRect(Math.floor(busX + 14), by + 3, 6, 2);
+
+      // Minik şehir etiketleri
+      ctx.fillStyle = "#9be8ff";
+      ctx.font = "bold 7px monospace";
+      ctx.fillText(SITE_CONFIG.route.from, 21, barY - 3);
+      ctx.fillStyle = "#ff9ebb";
+      ctx.fillText(SITE_CONFIG.route.to, 124, barY - 3);
+    }
+
+    function drawCat(t, pose) {
+      const scale = 2;
+      const isPetted = t < petHappyUntil;
+      const activePose = isPetted ? "happy" : pose;
+
+      // Nefes alma veya neşeli zıplama hareketi
+      let bobY = 0;
+      if (activePose === "happy" || activePose === "love") {
+        bobY = Math.floor(t / 240) % 2 === 0 ? -2 : 0;
+      } else {
+        bobY = Math.floor(t / 700) % 2 === 0 ? 0 : 1;
+      }
+
+      const ox = 56;
+      const oy = 64 + bobY;
+
+      // 1) Sallanan kuyruk (gövdenin arkasında)
+      const tailFrame = TAIL_FRAMES[Math.floor(t / 460) % 2];
+      for (const p of tailFrame) {
+        drawPixel(ox + p.x * scale, oy + p.y * scale, PALETTE[p.c], scale);
+      }
+
+      // 2) Ana kedi gövdesi
+      for (let y = 0; y < CAT_BASE.length; y++) {
+        const row = CAT_BASE[y];
+        for (let x = 0; x < row.length; x++) {
+          const ch = row[x];
+          if (ch !== "." && PALETTE[ch]) {
+            drawPixel(ox + x * scale, oy + y * scale, PALETTE[ch], scale);
+          }
+        }
+      }
+
+      // 3) Göz ifadeleri (kırpma / mutlu ^ ^ / yukarı bakış)
+      const blinkCycle = t % 3800;
+      const isBlinking = blinkCycle > 3620;
+
+      if (activePose === "happy" || activePose === "love" || isPetted) {
+        // Gözleri temizle ve ^ ^ çiz
+        for (const ex of [8, 9, 14, 15]) {
+          drawPixel(ox + ex * scale, oy + 8 * scale, PALETTE.W, scale);
+          drawPixel(ox + ex * scale, oy + 9 * scale, PALETTE.W, scale);
+        }
+        // Sol ^
+        drawPixel(ox + 8 * scale, oy + 8 * scale, PALETTE.E, scale);
+        drawPixel(ox + 7 * scale, oy + 9 * scale, PALETTE.E, scale);
+        drawPixel(ox + 9 * scale, oy + 9 * scale, PALETTE.E, scale);
+        // Sağ ^
+        drawPixel(ox + 15 * scale, oy + 8 * scale, PALETTE.E, scale);
+        drawPixel(ox + 14 * scale, oy + 9 * scale, PALETTE.E, scale);
+        drawPixel(ox + 16 * scale, oy + 9 * scale, PALETTE.E, scale);
+        // Ekstra pembe allık
+        drawPixel(ox + 6 * scale, oy + 10 * scale, PALETTE.B, scale);
+        drawPixel(ox + 17 * scale, oy + 10 * scale, PALETTE.B, scale);
+      } else if (activePose === "pointUp" && !isBlinking) {
+        // Yukarıya bakan gözler
+        for (const ex of [8, 9, 14, 15]) {
+          drawPixel(ox + ex * scale, oy + 9 * scale, PALETTE.W, scale);
+        }
+        drawPixel(ox + 8 * scale, oy + 7 * scale, PALETTE.H, scale);
+        drawPixel(ox + 9 * scale, oy + 7 * scale, PALETTE.E, scale);
+        drawPixel(ox + 14 * scale, oy + 7 * scale, PALETTE.H, scale);
+        drawPixel(ox + 15 * scale, oy + 7 * scale, PALETTE.E, scale);
+        drawPixel(ox + 8 * scale, oy + 8 * scale, PALETTE.E, scale);
+        drawPixel(ox + 9 * scale, oy + 8 * scale, PALETTE.E, scale);
+        drawPixel(ox + 14 * scale, oy + 8 * scale, PALETTE.E, scale);
+        drawPixel(ox + 15 * scale, oy + 8 * scale, PALETTE.E, scale);
+      } else if (isBlinking) {
+        for (const ex of [8, 9, 14, 15]) {
+          drawPixel(ox + ex * scale, oy + 8 * scale, PALETTE.W, scale);
+          drawPixel(ox + ex * scale, oy + 9 * scale, PALETTE.E, scale);
+        }
+      }
+
+      // 4) Poza göre pati animasyonları
+      if (activePose === "wave") {
+        const pawFrame = WAVE_PAW[Math.floor(t / 220) % 2];
+        for (const p of pawFrame) {
+          drawPixel(ox + p.x * scale, oy + p.y * scale, PALETTE[p.c], scale);
+        }
+      } else if (activePose === "pointUp") {
+        const lift = Math.floor(t / 300) % 2 === 0 ? -1 : 0;
+        for (const p of POINT_UP_PAW) {
+          drawPixel(ox + p.x * scale, oy + (p.y + lift) * scale, PALETTE[p.c], scale);
+        }
+        // Yukarıyı gösteren küçük zıplayan piksel ok
+        const arrowY = oy - 8 + (Math.floor(t / 280) % 2) * 2;
+        drawPixel(ox + 4, arrowY, "#56ccf2", 2);
+        drawPixel(ox + 2, arrowY + 2, "#56ccf2", 2);
+        drawPixel(ox + 6, arrowY + 2, "#56ccf2", 2);
+      } else if (activePose === "happy" || activePose === "love") {
+        for (const p of HAPPY_PAWS) {
+          drawPixel(ox + p.x * scale, oy + p.y * scale, PALETTE[p.c], scale);
+        }
+      }
+    }
+
+    function drawHearts() {
+      for (let i = hearts.length - 1; i >= 0; i--) {
+        const h = hearts[i];
+        h.y -= h.vy;
+        h.x += h.vx;
+        h.life -= 0.014;
+        if (h.life <= 0) {
+          hearts.splice(i, 1);
+          continue;
+        }
+        ctx.globalAlpha = Math.min(1, h.life * 1.4);
+        HEART_SPRITE.forEach((row, ry) => {
+          for (let rx = 0; rx < row.length; rx++) {
+            if (row[rx] === "X") {
+              drawPixel(h.x + rx, h.y + ry, h.color);
+            }
+          }
+        });
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    let lastAmbientHeart = 0;
+    let lastShootingStar = 0;
+
+    function renderLoop(t) {
+      const slide = SITE_CONFIG.slides[currentSlide];
+
+      drawSky(t);
+      drawGround();
+
+      if (slide.pose === "travel") {
+        drawTravelOverlay(t);
+      }
+
+      drawCat(t, slide.pose);
+      drawHearts();
+
+      // Ortam efektleri (sevgi & el sallama sahnelerinde hafif kalpler)
+      if ((slide.pose === "love" || slide.pose === "wave") && t - lastAmbientHeart > (slide.pose === "love" ? 550 : 1400)) {
+        spawnHeart(80, 62, 1);
+        lastAmbientHeart = t;
+      }
+
+      // Kayan yıldız efekti
+      if (t - lastShootingStar > (slide.pose === "love" ? 1800 : 4500)) {
+        spawnShootingStar();
+        lastShootingStar = t;
+      }
+
+      requestAnimationFrame(renderLoop);
+    }
+
+    /* ============================================================
+       ARAYÜZ VE DAKTİLO METİN KONTROLÜ
+       ============================================================ */
+    const progressPipsEl = document.getElementById("progressPips");
+    const soundBtn = document.getElementById("soundBtn");
+    const skySignEl = document.getElementById("skySign");
+    const signTopEl = document.getElementById("signTop");
+    const signBottomEl = document.getElementById("signBottom");
+    const petHintEl = document.getElementById("petHint");
+    const speakerTagEl = document.getElementById("speakerTag");
+    const dialogueBoxEl = document.getElementById("dialogueBox");
+    const dialogueTextEl = document.getElementById("dialogueText");
+    const tapPromptEl = document.getElementById("tapPrompt");
+    const extraPanelEl = document.getElementById("extraPanel");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    document.title = SITE_CONFIG.pageTitle;
+    signTopEl.textContent = SITE_CONFIG.skySign.top;
+    signBottomEl.textContent = SITE_CONFIG.skySign.bottom;
+
+    let typingTimer = null;
+    let isTyping = false;
+    let fullCurrentText = "";
+
+    function buildPips() {
+      progressPipsEl.innerHTML = "";
+      SITE_CONFIG.slides.forEach((_, idx) => {
+        const pip = document.createElement("div");
+        pip.className = "pip";
+        if (idx < currentSlide) pip.classList.add("done");
+        if (idx === currentSlide) pip.classList.add("active");
+        progressPipsEl.appendChild(pip);
+      });
+    }
+
+    function finishTypingImmediately() {
+      if (!isTyping) return;
+      clearInterval(typingTimer);
+      isTyping = false;
+      dialogueTextEl.textContent = fullCurrentText;
+      tapPromptEl.classList.add("ready");
+    }
+
+    function startTyping(text) {
+      clearInterval(typingTimer);
+      fullCurrentText = text;
+      isTyping = true;
+      tapPromptEl.classList.remove("ready");
+      dialogueTextEl.innerHTML = '<span class="typing-cursor"></span>';
+
+      let i = 0;
+      typingTimer = setInterval(() => {
+        i++;
+        const slice = text.slice(0, i);
+        dialogueTextEl.innerHTML =
+          slice.replace(/</g, "&lt;").replace(/>/g, "&gt;") +
+          '<span class="typing-cursor"></span>';
+
+        if (i % 2 === 0 && text[i - 1] !== " ") {
+          Sound.blip();
+        }
+
+        if (i >= text.length) {
+          clearInterval(typingTimer);
+          isTyping = false;
+          dialogueTextEl.textContent = text;
+          tapPromptEl.classList.add("ready");
+        }
+      }, 32);
+    }
+
+    function renderExtraPanel(slide) {
+      extraPanelEl.innerHTML = "";
+      extraPanelEl.classList.remove("visible");
+
+      if (slide.showPlanner) {
+        extraPanelEl.classList.add("visible");
+        const grid = document.createElement("div");
+        grid.className = "plan-grid";
+
+        SITE_CONFIG.dateOptions.forEach((opt) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "plan-chip" + (selectedPlans.has(opt) ? " selected" : "");
+          btn.innerHTML = `<span class="box-mark"></span><span>${opt}</span>`;
+
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (selectedPlans.has(opt)) {
+              selectedPlans.delete(opt);
+              btn.classList.remove("selected");
+            } else {
+              selectedPlans.add(opt);
+              btn.classList.add("selected");
+              spawnHeart(80, 66, 3);
+            }
+            Sound.click();
+          });
+
+          grid.appendChild(btn);
+        });
+
+        extraPanelEl.appendChild(grid);
+      }
+
+      if (slide.showSummary) {
+        extraPanelEl.classList.add("visible");
+        const chosen = Array.from(selectedPlans);
+
+        if (chosen.length > 0) {
+          const card = document.createElement("div");
+          card.className = "summary-card";
+          card.innerHTML = `
+            <div class="summary-title">Cumartesi Planımız:</div>
+            <div>${chosen.map((c) => "• " + c).join("<br>")}</div>
+          `;
+          extraPanelEl.appendChild(card);
+
+          const ssNote = document.createElement("div");
+          ssNote.style.cssText =
+            "background: var(--panel-30-light); border: 2px dashed var(--accent-10); color: var(--accent-10-bright); padding: 9px 10px; text-align: center; font-size: 14px; font-weight: 600; cursor: pointer;";
+          ssNote.textContent = "Buranın ekran göyüntüsünüüü alıppp bana atabiliysinnnn sevgilimmm <3";
+          ssNote.addEventListener("click", (e) => {
+            e.stopPropagation();
+            Sound.purr();
+            spawnHeart(80, 62, 5);
+          });
+          extraPanelEl.appendChild(ssNote);
+        }
+      }
+    }
+
+    function showSlide(index) {
+      currentSlide = Math.max(0, Math.min(index, SITE_CONFIG.slides.length - 1));
+      const slide = SITE_CONFIG.slides[currentSlide];
+
+      buildPips();
+      speakerTagEl.textContent = slide.speaker || SITE_CONFIG.defaultSpeaker;
+      skySignEl.classList.toggle("visible", Boolean(slide.showSign));
+
+      prevBtn.disabled = currentSlide === 0;
+      const isLast = currentSlide === SITE_CONFIG.slides.length - 1;
+      nextBtn.textContent = isLast ? "Başa Dön ↺" : "Devam ▸";
+      tapPromptEl.textContent = isLast ? "başa dönmek için dokun ↺" : "devam etmek için dokun ▾";
+
+      if (slide.pose === "wave" || slide.pose === "love") {
+        spawnHeart(80, 64, 3);
+      }
+
+      renderExtraPanel(slide);
+      startTyping(slide.text);
+    }
+
+    function handleAdvance() {
+      if (isTyping) {
+        finishTypingImmediately();
+        return;
+      }
+      Sound.next();
+      if (currentSlide >= SITE_CONFIG.slides.length - 1) {
+        showSlide(0);
+      } else {
+        showSlide(currentSlide + 1);
+      }
+    }
+
+    // Event dinleyicileri
+    dialogueBoxEl.addEventListener("click", handleAdvance);
+    nextBtn.addEventListener("click", handleAdvance);
+
+    prevBtn.addEventListener("click", () => {
+      if (currentSlide > 0) {
+        Sound.click();
+        showSlide(currentSlide - 1);
+      }
+    });
+
+    soundBtn.addEventListener("click", () => {
+      const on = Sound.toggle();
+      soundBtn.textContent = on ? "SES: AÇIK" : "SES: KAPALI";
+      soundBtn.classList.toggle("muted", !on);
+    });
+
+    // Kediye dokunup sevme etkileşimi
+    canvas.addEventListener("click", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const px = ((e.clientX - rect.left) / rect.width) * W;
+      const py = ((e.clientY - rect.top) / rect.height) * H;
+
+      petHappyUntil = performance.now() + 950;
+      spawnHeart(px, Math.min(py, 78), 4);
+      Sound.purr();
+
+      if (!hasPettedOnce) {
+        hasPettedOnce = true;
+        petHintEl.classList.add("hidden");
+      }
+    });
+
+    // Başlat
+    showSlide(0);
+    requestAnimationFrame(renderLoop);
+  </script>
+</body>
+</html>
